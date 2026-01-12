@@ -1,0 +1,25 @@
+# 1. IDE 관련 쓰레기 파일
+.metadata/
+.recommenders/
+RemoteSystemsTempFiles/
+*.tmp
+*.bak
+.settings/
+*.launch
+*.prefs
+.mxproject
+
+# 2. 빌드 결과물 (가장 중요)
+Debug/
+Release/
+*.elf
+*.bin
+*.hex
+*.map
+*.o
+*.d
+*.su
+
+# 3. OS 찌꺼기 (맥북/윈도우)
+.DS_Store
+Thumbs.db

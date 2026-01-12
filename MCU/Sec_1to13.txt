@@ -1,0 +1,44 @@
+01
+FPU : 부동소수점 연산 장치 
+FPU 비활성 : 
+프로젝트 속성 c/cpp 세팅 - Floating-point unit - None
+프로젝트 속성 c/cpp 세팅 - Floating-point ABI - Software implementation
+프로젝트를 타겟에 다운로드 : 
+프로젝트 Debug As - STM32 Cortex-< C/C++ Application
+Debug setting : 
+Debugger - Debug probe - St-LINK(ST-LING GDB server)
+Debugger - Interface - SWD(Default, Don't change that)
+- Don't change anything else and Serial Wire Viewer is one of the important
+feature of this IDE, and we must learn how to use this faeture.
+So, just enable this(SWV)
+
+02
+Using printf outputs on ARM Cortex M3/M4/M7 based MCUs
+- This discussion is only applicable to MCUs based on ARM Cortex
+M3/M4/M7 or higher processors.
+- printf works over SWO pin(Serial Wire Output) of SWD interface
+
+ARM Cortex M4 Processor
+ITM unit : Instrumentation Trace Macrocell Unit - an optional application driven trace source that supports printf style debugging to trace operating system and 
+Application events, and generates diagnostic system information
+SWD : Serial Wire Debug is a two-wire protocol  for accessing the ARM debug interface
+SWD(Debug connector) has 3pins. In which two pins are used for debug and one pin is for trace.  SO, trace means in order to get the trace related information from the processor.
+
+https://github.com/niekiran/Embedded-C/blob/master/All_source_codes/target/itm_send_data.c
+위 링크의 코드를 syscalls.c의  #include 코드 아래에 붙여넣기
+_write함수의 _io_pitchar(+ptr++); 주석처리 후
+ITM_SendChar(*ptr++); 작성 - ITM의 FIFO 사용
+
+Main.c에 printf코드 작성 후 빌드 - 디버그 환경설정에 SWD활성화 후 디버그
+printf문에서 halt시 Window - Show View - SWV - SWV ITM Data Console
+SWV ITM Data Console의 settings열고 ITM Stimulus Ports의 0번 포트 체크 후 console에서 start trace후 resume시 port 0에 printf 정상 작동
+
+	•	섹션 6 (Debugging): 에러 났을 때 돌아오면 됩니다. 지금은 printf도 못 하는데 디버깅 툴 배워봤자 못 씁니다.
+	•	섹션 7, 8 (Memory, Bus): "주소값이 있다", "데이터가 다니는 도로가 있다" 정도만 알면 됩니다. 몰라도 코드는 돌아갑니다.
+	•	섹션 9, 10 (Clocks): 이게 제일 어렵습니다. 나중에 코드 짤 때 **"아, 전등 스위치(Clock)를 켜야 불(GPIO)이 들어오는구나"**라는 것만 몸으로 익히면 됩니다. 이론부터 파면 머리 터집니다.
+	•	섹션 11, 12 (Vector, NVIC): 인터럽트(중단) 개념인데, 이것도 나중에 버튼 누르는 예제 할 때 그때 가서 "아 이게 인터럽트구나" 하고 배우는 게 10배 빠릅니다.
+💡 volatile 3줄 요약
+	1	컴파일러(번역기)는 똑똑한 척을 합니다: "어? 이 변수는 코드 안에서 아무도 안 건드리네? 그럼 메모리에서 읽지 말고 그냥 내가 기억한 값 써야지~" 하고 멋대로 최적화를 해버립니다.
+	2	하드웨어는 억울합니다: 실제로는 버튼이 눌려서 하드웨어 값(주소)이 0에서 1로 바뀌었는데, 컴파일러는 "아까 0이었잖아" 하고 계속 0으로 처리합니다. (버그 발생!)
+	3	해결책: 변수 앞에 volatile을 붙여주면 "야 컴파일러! 너 똑똑한 척(최적화) 하지 마. 무조건 실제 주소 가서 값 다시 읽어와!" 라고 명령하는 겁니다.
+→ 즉, 하드웨어 주소값을 건드리는 변수에는 무조건 volatile을 붙여야 한다. 끝.
