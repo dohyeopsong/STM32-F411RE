@@ -1,3 +1,4 @@
+SECTION 14
 GPIO
 GPIO port mode register
 Result values:
@@ -5,6 +6,7 @@ Result values:
 - 0x0000 0280 for port B
 - 0x0000 0000 for other ports
 
+SECTION 15
 Push-Pull : 강한 녀석
 1을 주면 3.3V 전기를 강하게 쏴줌
 0을 주면 OV(GND)로 강하게 끌어내림
@@ -54,3 +56,4 @@ GPIOA->ODR &= ~(1 << 5);
 
 // 다른 장치가 핀을 HIGH로 당기는지 확인
 uint8_t bus_state = (GPIOA->IDR >> 5) & 1;
+

@@ -1,0 +1,16 @@
+SECTION 16
+SPEED register : OSPEEDRy
+00 : low speed, 01 : Medium speed, 10 : Fast speed, 11 : High speed
+Data sheet의 OSPEED에서 각각의 속도의 주파수 확인 가능
+
+Capacitance Load(CL) : GPIO가 충전해야 할 전기 저장량 - 클수록 느려짐, 단위는 pF (피코패럿)
+VDD : 전원 전압 - 높을수록 빠르게 충전 가능
+
+Bit-Banging : 하드웨어 I2C를 안쓰고 GPIO로 직접 I2C 신호를 만드는 것
+GPIO로 일일이 HIGH/LOW 토글하면서 I2C 신호를 흉내
+Trise : 상승 시간 - LOW -> HIGH
+Tfall : 하강 시간 - HIGH -> LOW
+
+!! OSPEEDR는 output 모드 일 때만 적용됨
+
+pull-up/pull-down register : PUPDRy
