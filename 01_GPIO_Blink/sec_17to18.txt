@@ -1,0 +1,15 @@
+Section 17
+GPIO Alternate functionality register
+핀들을 I/O대신 다른 기능을 사용하기 위함
+Datasheet의 포트 번호 + AF 번호 조합으로 기능 확인
+
+Section 18
+STM32 : register가 32bit
+Alternate function register는 핀 16개 x 4bit = 64bit
+= register를 두 개로 나누어 사용(Low register, High register)
+Low register : port 0 ~ 7
+High register : port 8 ~ 15
+
+Datasheet의 block diagram을 보면 GPIO register와 AHB1버스와 연결된거 확인
+RM의 RCC AHB1 peripheral clock enable register : 
+GPIO(A ~ D)에 rw모드, 1 : 활성화, 0 : 비활성화

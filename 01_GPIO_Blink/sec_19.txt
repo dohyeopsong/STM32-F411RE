@@ -1,0 +1,31 @@
+section 19
+드라이버 만들기
+새프로젝트 - empty project
+폴더 만들기 divers/Inc, divers/Src
+divers folder properties에서 c/c++ build - Exclude resource from build 언체크
+driver/Inc에 header file 생성 - project/Src/main.c에 include header file
+-> 빌드시 파일을 찾을 수 없다고 경고 - 빌드 설정이 올바르게 구성되지 않음
+-> header 파일을 이클립스에게 알려야함
+-> project - properties - C/C++ Build - Settings - MCU GCC Compiler - Include paths
+add - project/drivers/Inc를 추가
+
+reference manual
+flash module Main memory : Embedded Flash memory in STM32F411xC/E
+register boundary addresses : Memory map
+
+Flash Memory : 
+- 코드가 저장되는 곳
+- 전원을 꺼도 지워지지 않음 (비휘발성)
+- MCU가 켜지면 제일 먼저 찾아가서 코드 읽음
+
+SRAM :
+- 프로그램 실행 중에 변수를 저장하고 계산하는 곳
+- 전원을 끄면 다 날아감 (휘발성)
+- 속도 빠름
+
+ROM :
+- STM32를 공장에서 만들 때 미리 박아둔 절대 지워지지 않는 기본 프로그램이 있는곳
+- 칩이 먹통이 됐을 때나 펌웨어를 업로드할 때 사용 (Bootloader 영역)
+
+APB1 : 고속 통신이 필요한 주변 장치 사용시 이용(ex. Camera interfaces, GPIO)
+APB2 : 저속 통신으로 충분한 주변 장치 사용시 이용
