@@ -27,5 +27,12 @@ ROM :
 - STM32를 공장에서 만들 때 미리 박아둔 절대 지워지지 않는 기본 프로그램이 있는곳
 - 칩이 먹통이 됐을 때나 펌웨어를 업로드할 때 사용 (Bootloader 영역)
 
-APB1 : 고속 통신이 필요한 주변 장치 사용시 이용(ex. Camera interfaces, GPIO)
-APB2 : 저속 통신으로 충분한 주변 장치 사용시 이용.
+AHB bus : 고속 통신이 필요한 주변 장치 사용시 이용(ex. Camera interfaces, GPIO)
+APB bus : 저속 통신으로 충분한 주변 장치 사용시 이용
+
+Full Memory map of the MCU :
+시작 :        0x0000_0000 
+PERIPH_BASE : 0x4000_0000 
+끝 :          0xFFFF_FFFF
+
+reference manual을 보면 0x4000_0000는 TIM2의 CR1 레지스터인걸 알 수 있음
