@@ -37,17 +37,25 @@
  * Base addresses of peripherals which are hanging on APB1 bus
  * TODO : Complete for all other peripherals
  */
-#define I2C1_BASEADDR		(APB1PERIPH_BASEDDR + 0x5400)
+#define I2C1_BASE			(APB1PERIPH_BASEDDR + 0x5400)
+#define I2C2_BASE			(APB1PERIPH_BASEDDR + 0x5800)
+#define I2C3_BASE			(APB1PERIPH_BASEDDR + 0x5C00)
 
+#define SPI2_BASE			(APB1PERIPH_BASEDDR + 0x3800)
+#define SPI3_BASE			(APB1PERIPH_BASEDDR + 0x3C00)
 
+#define USART2_BASE			(APB1PERIPH_BASEDDR + 0x4400)
 
 /*
  * Base addresses of peripherals which are hanging on APB2 bus
  * TODO : Complete for all other peripherals
  */
+#define EXTI_BASE			(APB2PERIPH_BASEDDR + 0x3C00)
+#define SYSCFG_BASE			(APB2PERIPH_BASEDDR + 0x3800)
+#define SPI4_BASE			(APB2PERIPH_BASEDDR + 0x3400)
+#define SPI1_BASE			(APB2PERIPH_BASEDDR + 0x3000)
 
-
-
-
+#define USART1_BASE			(APB2PERIPH_BASEDDR + 0x1000)
+#define USART6_BASE			(APB2PERIPH_BASEDDR + 0x1400)
 
 #endif /* INC_STM32F411XX_H_ */

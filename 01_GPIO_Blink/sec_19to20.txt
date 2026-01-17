@@ -36,3 +36,7 @@ PERIPH_BASE : 0x4000_0000
 끝 :          0xFFFF_FFFF
 
 reference manual을 보면 0x4000_0000는 TIM2의 CR1 레지스터인걸 알 수 있음
+
+USART와 UART의 차이점 : 
+USART : synchronous, asychronous 둘다 지원
+UART : asychronous
