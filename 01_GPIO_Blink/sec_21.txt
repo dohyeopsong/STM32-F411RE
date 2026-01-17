@@ -1,0 +1,7 @@
+section 21
+GPIO의 기능들은 구조체로 만들어서 사용
+주석은 꼭 달아줘야함 - RM의 각 기능 레지스터 소제목 + offset
+특히 alternate function register는 low/high를 AFR[2]로 즉, 배열로 나타내므로 주의
+몇몇 기능들은 volatile(휘발성)이 필요하므로 간단한 __vo같은걸로 정의 후 모든 기능에 넣어줌
+
+<stdint.h> 파일을 포함해줘야 uint8_t(unsigned char), uint32_t(unsigned int)같은 속기 표기법 적용가능
