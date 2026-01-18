@@ -40,3 +40,5 @@ reference manual을 보면 0x4000_0000는 TIM2의 CR1 레지스터인걸 알 수
 USART와 UART의 차이점 : 
 USART : synchronous, asychronous 둘다 지원
 UART : asychronous
+
+매크로는 대문자로 작성하는것이 좋은 코딩습관

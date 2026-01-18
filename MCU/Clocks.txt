@@ -1,0 +1,48 @@
+Clock
+
+클럭은 특정 주파수의 일부 사각파 신호
+클럭과 동기화 하지 않으면 부품들이 작동되지 않음
+MUC (CPU와 주변기기들): 노를 젓는 사람들
+전기 (Power): 사람들이 먹는 밥 (힘)
+클럭 (Clock): 북 치는 사람 
+사람들이 밥을 먹어서 힘은 넘치지만 북 치는 사람들이 없으면 언제 노를 저어야 할지 모름
+
+올바른 클럭을 사용하는것이 중요
+애플리케이션이 저전력 도메인을 겨냥한다면 클럭의 주파수에 주의해야함
+
+Clock :
+- HSI oscillator Clock
+HSI : High Speed Internal
+
+- HSE oscillator Clock
+HSI: High Speed External
+
+HSE can be provided to the MCU via a crystal or external source
+(from another ckt or from another MCU)
+
+On the STM32-DISC board, HSE is 8MHz provided by the onboard crystal
+(but STM32-Nucleo is not provided)
+
+On NUCLEO board, HSE is of 8MHz pulled from ST-LINK ckt(circuitry)
+
+MX의 클럭 구성 회로도에 HSE비활성화 되어있으면 :
+Pinout & Configuration - System Core - RCC - High Speed Clock (HSE) 설정에서
+Nucleo board는 BYPAss Clock source로 설정, DISC board는 Crystal/Ceramic Source 설정
+
+- Main PLL (PLL) Clock
+
+Clock source:
+- Crystal oscillator (external to the MCU) (HSE) 
+클럭을 공급하기 위해 외부 구성 요소로 외부에 연결해야 함
+stm32cubemx의 Clock Configuration 좌측 중앙에 input frequency에 속도 확인 
+자세한 내용은 보드 메뉴얼 참고, nucleo보드에는 Crystal oscillator 없음
+
+- The RC oscillator (Internal to the MCU) (HSI)
+현대 대부분의 MCU에 포함되어있음
+
+- The PLL (Phase Locked Loop) (Internal to the MCU)
+MCU에 포함되어있음, 낮은 주파수 clock을 입력받아 더 높은 주파수 clock을 생성
+
+HCLK : main clock which governs the AHB bus of the microcontroller
+SYSCLK(MHz) - AHB Prescaler - HCLK(MHz) 로 구성되어있음
+SYSCLK이 HCLK보다 클 때 AHB Prescaler로 나눠줘야함
