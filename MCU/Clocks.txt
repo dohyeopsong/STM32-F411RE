@@ -46,3 +46,53 @@ MCU에 포함되어있음, 낮은 주파수 clock을 입력받아 더 높은 주
 HCLK : main clock which governs the AHB bus of the microcontroller
 SYSCLK(MHz) - AHB Prescaler - HCLK(MHz) 로 구성되어있음
 SYSCLK이 HCLK보다 클 때 AHB Prescaler로 나눠줘야함
+
+'''
+#include<stdint.h>
+
+#define ADC_BASE_ADDR   			0x40012000UL
+
+#define ADC_CR1_REG_OFFSET 			0x04UL
+
+#define ADC_CR1_REG_ADDR  			(ADC_BASE_ADDR + ADC_CR1_REG_OFFSET )
+
+#define RCC_BASE_ADDR              0x40023800UL
+
+#define RCC_APB2_ENR_OFFSET        0x44UL
+
+#define RCC_APB2_ENR_ADDR          (RCC_BASE_ADDR + RCC_APB2_ENR_OFFSET )
+
+int main(void)
+{
+	uint32_t *pAdcCr1Reg =   (uint32_t*) ADC_CR1_REG_ADDR;
+	uint32_t *pRccApb2Enr =  (uint32_t*) RCC_APB2_ENR_ADDR;
+
+	//1.Enable the peripheral clock for ADC1
+	*pRccApb2Enr |= ( 1 << 8);
+
+    //2. modify the ADC cr1 register
+	*pAdcCr1Reg |= ( 1 << 8);
+'''
+---------------------------------RCC 이해-------------------------------------
+[ CPU (주인님) ]
+             |
+             V
+  ======================= (1층 복도: AHB 버스)
+     |               |
+     |               | <--- CPU가 관리실로 걸어 들어감
+     V               V
++---------+     +-----------------------+
+|  GPIO   |     |  RCC (관리실)          | <--- [위치: 1층 AHB]
+| (창고)  |     |                       |
++---------+     | [ 두꺼비집 패널 ]       |
+     ^          | 1. AHB 스위치 ---------> (1층 창고 전원 ON!)
+     |          | 2. APB1 스위치 ------+
+     |          | 3. APB2 스위치 ----+ |
+     |          +--------------------|-|----+
+     |전선                           | |    |
+     |                               | |    | (전선이 위층으로 연결됨)
+     |                               V |    V
+(전기 공급)                     [ 2층 ]  [ 3층 ]
+                                (UART)   (ADC)
+---------------------------------RCC 이해-------------------------------------
+AHB의 RCC를 제외한 모든 버스의 스위치들은 기본적으로 꺼져있음, RCC를 통해 스위치들을 켤 수 있음
