@@ -5,3 +5,7 @@ GPIO의 기능들은 구조체로 만들어서 사용
 몇몇 기능들은 volatile(휘발성)이 필요하므로 간단한 __vo같은걸로 정의 후 모든 기능에 넣어줌
 
 <stdint.h> 파일을 포함해줘야 uint8_t(unsigned char), uint32_t(unsigned int)같은 속기 표기법 적용가능
+괄호 놓지지 말기
+
+각 GPIO들의 주소를 타입 캐스트로 변환 후 GPIO들을 정의
+ 
