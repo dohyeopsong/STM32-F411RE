@@ -182,5 +182,15 @@ typedef struct
 // Clock Disable Macros for SYSCFG peripheral
 #define SYSCFG_PCLK_DI() (RCC->APB2ENR &= ~(1 << 14))
 
+//some generic macros
+
+#define ENABLE 				1
+#define DISABLE 			0
+#define SET 				ENABLE
+#define RESET 				DISABLE
+#define GPIO_PIN_SET        SET
+#define GPIO_PIN_RESET      RESET
+#define FLAG_RESET         RESET
+#define FLAG_SET 			SET
 
 #endif /* INC_STM32F411XX_H_ */
