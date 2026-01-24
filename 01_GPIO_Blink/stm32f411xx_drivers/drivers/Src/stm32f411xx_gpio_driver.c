@@ -102,6 +102,19 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle)
 	}else
 	{
 		// this part will code later. (interrupt mode)
+		if(pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_FT)
+		{
+			// 1. configure the FTSR(falling trigger selection register)
+		}else if (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_RT)
+		{
+			// 1. configure the RTST
+		}else if (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_RFT)
+		{
+			// 1. configure both FTSR and STSR
+		}
+
+		// 2. confugyre the GPIO part selection in SYSCFG_EXTICR
+
 	}
 
 	temp = 0;
