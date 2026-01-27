@@ -41,27 +41,27 @@
  * Base addresses of peripherals which are hanging on APB1 bus
  * TODO : Complete for all other peripherals
  */
-#define I2C1_BASE			(APB1PERIPH_BASEDDR + 0x5400)
-#define I2C2_BASE			(APB1PERIPH_BASEDDR + 0x5800)
-#define I2C3_BASE			(APB1PERIPH_BASEDDR + 0x5C00)
+#define I2C1_BASEADDR			(APB1PERIPH_BASEDDR + 0x5400)
+#define I2C2_BASEADDR			(APB1PERIPH_BASEDDR + 0x5800)
+#define I2C3_BASEADDR			(APB1PERIPH_BASEDDR + 0x5C00)
 
-#define SPI2_BASE			(APB1PERIPH_BASEDDR + 0x3800)
-#define SPI3_BASE			(APB1PERIPH_BASEDDR + 0x3C00)
+#define SPI2_BASEADDR			(APB1PERIPH_BASEDDR + 0x3800)
+#define SPI3_BASEADDR			(APB1PERIPH_BASEDDR + 0x3C00)
 
-#define USART2_BASE			(APB1PERIPH_BASEDDR + 0x4400)
+#define USART2_BASEADDR			(APB1PERIPH_BASEDDR + 0x4400)
 
 /*
  * Base addresses of peripherals which are hanging on APB2 bus
  * TODO : Complete for all other peripherals
  */
-#define EXTI_BASE			(APB2PERIPH_BASEDDR + 0x3C00)
-#define SYSCFG_BASE			(APB2PERIPH_BASEDDR + 0x3800)
-#define SPI4_BASE			(APB2PERIPH_BASEDDR + 0x3400)
-#define SPI1_BASE			(APB2PERIPH_BASEDDR + 0x3000)
-#define SPI5_BASE			(APB2PERIPH_BASEDDR + 0x5000)
+#define EXTI_BASEADDR			(APB2PERIPH_BASEDDR + 0x3C00)
+#define SYSCFG_BASEADDR			(APB2PERIPH_BASEDDR + 0x3800)
+#define SPI4_BASEADDR			(APB2PERIPH_BASEDDR + 0x3400)
+#define SPI1_BASEADDR			(APB2PERIPH_BASEDDR + 0x3000)
+#define SPI5_BASEADDR			(APB2PERIPH_BASEDDR + 0x5000)
 
-#define USART1_BASE			(APB2PERIPH_BASEDDR + 0x1000)
-#define USART6_BASE			(APB2PERIPH_BASEDDR + 0x1400)
+#define USART1_BASEADDR			(APB2PERIPH_BASEDDR + 0x1000)
+#define USART6_BASEADDR			(APB2PERIPH_BASEDDR + 0x1400)
 
 
 /*********************peripheral register definition structures******************************/
@@ -112,6 +112,34 @@ typedef struct
 	__vo uint32_t DCKCFGR;		   // RCC Dedicated Clocks Configuration Register								Address offset: 0x8C
 }RCC_RegDef_t;
 
+
+/*
+ * peripheral register definition structure for EXTI
+ */
+
+typedef struct
+{
+	__vo uint32_t IMR;		// EXTI Interrupt mask register 									Address offset: 0x00
+	__vo uint32_t EMR;		// EXTI Event mask register											Address offset: 0x04
+	__vo uint32_t RTSR;		// EXTI Rising trigger selection register							Address offset: 0x08
+	__vo uint32_t FTSR;		// EXTI Falling trigger selection register							Address offset: 0x0C
+	__vo uint32_t SWIER;	// EXTI Software interrupt event register							Address offset: 0x10
+	__vo uint32_t PR;		// EXTI Pending register											Address offset: 0x14
+}EXTI_RegDef_t;
+
+
+/*
+ * peripheral register definition structure for SYSCFG
+ */
+
+typedef struct
+{
+	__vo uint32_t MEMRMP;		// SYSCFG memory remap register 									Address offset: 0x00
+	__vo uint32_t PMC;			// SYSCFG peripheral mode configuration register					Address offset: 0x04
+	__vo uint32_t EXTICR[4];	// SYSCFG external interrupt configuration register 1~4				Address offset: 0x08-0x14
+	uint32_t RESERVED[2];		// Reserved, 0x18-0x1C
+	__vo uint32_t CMPCR;		// Compensation cell control register								Address offset: 0x20
+}SYSCFG_RegDef_t;
 /***************peripheral definitions ( Peripheral base addresses typecasted to xxx_RegDef_t )**********************/
 #define GPIOA			((GPIO_RegDef_t*)GPIOA_BASEADDR)
 #define GPIOB			((GPIO_RegDef_t*)GPIOB_BASEADDR)
@@ -122,7 +150,8 @@ typedef struct
 
 #define RCC 				((RCC_RegDef_t*)RCC_BASEADDR)
 
-
+#define EXTI				((EXTI_RegDef_t*)EXTI_BASEADDR)
+#define SYSCFG				((SYSCFG_RegDef_t)SYSCFG_BASEADDR)
 /*********************Clock Enable Macros******************************/
 // Clock Enable Macros for GPIOx peripherals
 #define GPIOA_PCLK_EN()		(RCC->AHB1ENR |= (1 << 0))
@@ -191,6 +220,31 @@ typedef struct
 #define GPIOD_REG_RESET()               do{ (RCC->AHB1RSTR |= (1 << 3)); (RCC->AHB1RSTR &= ~(1 << 3)); }while(0)
 #define GPIOE_REG_RESET()               do{ (RCC->AHB1RSTR |= (1 << 4)); (RCC->AHB1RSTR &= ~(1 << 4)); }while(0)
 #define GPIOH_REG_RESET()               do{ (RCC->AHB1RSTR |= (1 << 7)); (RCC->AHB1RSTR &= ~(1 << 7)); }while(0)
+
+
+#define GPIO_BASEADDR_TO_CODE(x)		  ( (x == GPIOA) ? 0:\
+										    (x == GPIOB) ? 1:\
+										    (x == GPIOC) ? 2:\
+											(x == GPIOD) ? 3:\
+											(x == GPIOE) ? 4:\
+											(x == GPIOH) ? 7:\ )
+
+/*
+ * IRQ(Interrupt Request) Numbers of STM32F411xx MCU
+ */
+
+#define IRQ_NO_EXTI16		1
+#define IRQ_NO_EXTI21		2
+#define IRQ_NO_EXTI22		3
+#define IRQ_NO_EXTI0		6
+#define IRQ_NO_EXTI1		7
+#define IRQ_NO_EXTI2		8
+#define IRQ_NO_EXTI3		9
+#define IRQ_NO_EXTI4		10
+#define IRQ_NO_EXTI9_5		23
+#define IRQ_NO_EXTI15_10	40
+#define IRQ_NO_EXTI17		41
+#define IRQ_NO_EXTI18		42
 
 //some generic macros
 
