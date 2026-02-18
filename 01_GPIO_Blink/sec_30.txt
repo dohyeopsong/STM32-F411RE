@@ -1,0 +1,72 @@
+section 30: STM32 Pin specifications
+
+Vdd and Vss
+
+Vdd: External main supply voltage
+- Vdd is the main power supply of the microcontroller. Provided
+externally Vdd pins of the microcontroller
+= Standard operating voltage of Vdd is : 1.8V ≦ Vdd ≦ 3.6V
+- Max voltage which can be applied on any Vdd pin of the microcontroller
+is 4V (check AMR tables in the datasheet)
+- Vss is a ground reference of the microcontroller and should be 
+maintained at 0V
+- Minimum balue which can be applied to Vss is -0.3V (no less than this
+
+Vin
+- Vin is the input voltage applied to any STM32 pins
+
+STM32 pins
+- Three-volt tolerant (abbreviated as TT)
+- Five-volt tolerant (abbreviated as FT)
+- Three-volt tolerant directly connected to ADC(TTa)
+
+Tolerance represents the voltage value which can be accepted by the GPIO
+
+Three-volt tolerant pin (TT or TTa)
+- The maximum Vin voltage is : Vdd + 0.3V (Exceeding this voltage will damage the TTa pin and 
+may lead to device malfuncion)
+- General operating condition : -0.3V ≦ Vin(tta) ≦ Vdd + 0.3V
+
+Five-volt tolerant pin (FT)
+- Five-volt tolerant pin means voltage protection is guaranteed (signal clamping
+using protection diodes) for the pin when its input voltage falls with in -0.3V ≦ Vin(ft) ≦ 5.5V
+- A GPIO is five-volt tolerant only in input mode (Five-volt tolerant feature not applicable
+when the gpio is in output mode or analog mode)
+- for FT GPIO, maximum Vin voltage limited to Vdd+4V
+- General operating condition for FT pin : -0.3V ≦ Vin(ft) ≦ 5.5V
+- When Vdd = 0V (Unpowered stm32 device), the input voltage on the FT GPIO cannot exceed 4V.
+
+Ingected current(IINJ)
+- Injection current is the current that is being forced into a pin by an inpu t voltage (Vin) higher than 
+the positive supply (Vdd) or lower than ground (Vss).
+- Injection current above the given specifications causes a current flow inside the device and effects
+its reliablilty. Even a tiny current exceeding the specified limit is not allowed.
+- Negative-ingection current is the current induced when Vin < Vss. The maximum negative injected current
+is -5mA, and the minimum Vin voltage level acceptable on the GPIO is -0.3V for TT and FT GPIO.
+- Positive-injection current is the current induced when Vin > Vdd. For STM32 devices, the maximum 
+positive-injection current on FT GPIO is defined as N/A or 0mA.
+- 0mA means that current injection can damage the GPIO and induce STM32 malfunction.
+- Positive current injection is prohibited for TT or FT GPIO defined as 0mA
+- As long as Vin on FT is less than AMR (Vdd + 4V) the positive current injection won't happen. 
+The upper limit 0-ma indicates that the positive injection current should never flow into the gpio pim,
+otherwise, the device may be damaged. If vin goes beyond Vdd + 4V, then positive injection happens, and 
+the device may be damaged if the injection current is ablove the threshold, which is not mentioned in the datasheet.
+
+Logic levels 
+All I/Os are CMOS and TTL compliant
+
+Logic level compatibility
+In case of communication exchange, STM32 output signals must be compatible with the VIL/VIH of the 
+receptor device and STM32 inputs must be compliant with the VOL/VOH of the transmitter device as shown in
+
+VOH : Output High voltage, The minimum output high level voltage which can be interpreted as logic High
+VOL : Output Low voltage, The maximum output low level voltage which can be interpreted as logic Low
+VIH : Input High voltage, the maximum voltage level that is interpreted as a logical 0 by a digital input 
+VIL : Intput Low voltage, the minimum voltage level that is interpreted as a logical 1 by a digital input
+
+VOH ≧ VIH
+
+For the CMOS technology, the input threshold voltages are relative to Vdd as follows: 
+VIH(min) : ~ 2/3 Vdd and VIL(Max) ~ 1/3Vdd
+For the TTL technology, the levels are fixed and equal to VIH(min) = 2V and VIL(Max) = 0.8V
+
