@@ -1,0 +1,18 @@
+Standard Mode
+- In standard mode communcation data transfer rate can reach up 
+to maximum of 100kbit/sec.
+- Standard mode was the very first mode introduved when first I2C
+spec was released.
+- Standard-mode deviced, however, are not upward compatible;
+They can't communicate with devices of Fast mode or above.
+
+Fast Mode
+- Fast mode is a mode in I2C protocol, where devices can receive and 
+transmit data up to 400 kbits/s.
+- Fast-mode devices are downward-compatible and can communicate with
+Standard-mode devices in a - to 100 kbit/s I2C bus system.
+- Standard-mode devices, however, are not upward compatible; they should
+not be incorporated in a Fast-mode I2C-bus system as they cannot follow 
+the hogher transfer rate and unpredictable states would occur.
+- To achieve data transfer rate up to 400 kbits/sec, you must put the
+I2C device in to fast mode.
