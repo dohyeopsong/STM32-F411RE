@@ -1,0 +1,39 @@
+Scenario of single master and single slave(One to One)
+
+Hardware of software slave select management can be set using the SSM
+    bit in the SPIx_CR1 register.
+
+Software:
+    Software NSS management(SSM = 1): 
+    in this configuration, slave select information is driven internally 
+    by the SSI bit value in register SPIx_CR1. The external NSS pin 
+    is free for other application usese.
+
+Hardware:
+    Hardware NSS management (SSM = 0):
+    NSS pin must be in output mode. The NSS pin is managed by the Hardware
+
+    NSS pin bust be pulled low to active slave to communicate with master.
+
+
+Scenario of Master and three independent slaves
+:
+    In this application you cannot use software slave management.
+    You have to use hardware slave management
+
+
+Points to remember
+
+Senario-1:
+1 master and 1 slave
+    1) You need not to use NSS pin of master and slave if you use software slave 
+    management
+    2) If you don't want to use software slave management then you can connect NSS of
+    master to NSS of slave
+
+Senario-2:
+1 master and multiple slaves
+    1) You connot use software slave management here
+    2) You connot use NSS pin of the mster to connect to NSS pin of any of the slave.
+    3) Master has to use some of its GPIO pins to control the different NSS pins of the slaves.
+

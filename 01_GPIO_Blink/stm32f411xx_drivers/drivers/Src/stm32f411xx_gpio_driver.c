@@ -130,13 +130,13 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle)
 	}
 
 	// 2. configure the speed
-	temp = (pGPIOHandle->GPIO_PinConfig.GPIO_PinSpeed << (2 * pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber));
-	pGPIOHandle->pGPIOx->OSPEEDR &= ~(0x3 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber); // clearing
+	temp = (pGPIOHandle->GPIO_PinConfig.GPIO_PinSpeed << ( 2 * pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber) );
+	pGPIOHandle->pGPIOx->OSPEEDR &= ~( 0x3 << ( 2 * pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber)); //clearing
 	pGPIOHandle->pGPIOx->OSPEEDR |= temp;
 
 	// 3. configure the pupd settings
-	temp = (pGPIOHandle->GPIO_PinConfig.GPIO_PinPuPdControl << (2 * pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber));
-	pGPIOHandle->pGPIOx->PUPDR &= ~(0x3 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber); // clearing
+	temp = (pGPIOHandle->GPIO_PinConfig.GPIO_PinPuPdControl << ( 2 * pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber) );
+	pGPIOHandle->pGPIOx->PUPDR &= ~( 0x3 << ( 2 * pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber)); //clearing
 	pGPIOHandle->pGPIOx->PUPDR |= temp;
 
 	// 4. configure the optype
@@ -152,7 +152,7 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle)
 
 		temp1 = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber / 8;
 		temp2 = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber % 8;
-		pGPIOHandle->pGPIOx->AFR[temp1] &= (0xF << (4 * temp2));
+		pGPIOHandle->pGPIOx->AFR[temp1] &= ~(0xF << (4 * temp2));
 		pGPIOHandle->pGPIOx->AFR[temp1] |= (pGPIOHandle->GPIO_PinConfig.GPIO_PinAltFunMode << (4 * temp2));
 	}
 }

@@ -1,0 +1,66 @@
+SPI: Serial Peripheral Interface
+The SPI bus allows the communication between one master
+device and one or more slave devices. (Sensor, EEPROM, SDCARD, etc)
+
+SCLK: Serial Clock
+MOSI: Master Out Slave In
+MISO: Master In Slave Out
+
+1. Four I/O pins are dedicated to SPI communication with external devices.
+2. MISO: Master In / Slave Out data. In the general case, this pin is used to 
+transmit data in slace mode and receive data in master mode
+3. MOSI: Master Out / Slace In data. In the general case, this pin is used to 
+transmit data in master mode and receive data in slave mode.
+4. SCK: Serial Clock output pin for SPI master and input pun for SPI slaves.
+5. NSS: Slave select pin. Depending on the SPI and NSS settings, this pin can be
+used to select an individual slave device for communication
+
+MINIMAL SPI BUS
+The SPI bus allows the communication between one master device and one or more slave devices.
+In some applications SPI bus may consists of just two wires - one for the clock signal and
+the other for synchronous data transfer. Other signals can be added depending on the data
+exchange between SPI nodes and their slave select signal managemant.
+
+slave pin의 nss를 GND로 보내지 않으면 하이 임피던스(Hi-Z)상태가 되면서 비활성화, 마스터와 연결시 LOW상태로 활성화
+
+
+CUSTOMIZING SPI BUS: BUS CONFIGURATIONS
+The SPI allows the MCU to communicate using different configurations, depending on 
+the device targeted and the application requirements.
+
+1. FULL-DUPLEX COMMUNICATION
+In this configuration, the shift registers of the master and slave are linked using two unidirectional
+lines between the MOSI and the MISO pins. During SPI communication. data is shifted synchronously on the
+SCK clock edges provided by the master. The master transmits the data to be sent to the slave via the 
+MOSI line and receives data from the slave via the MISO line.
+- By default, the SPI is configurated for full-duplex communication
+
+2. HALF-DUPLEX COMMUNICATION
+In this configuration, one single cross connection line is used to link the shift registers of the
+master and slave together. During this communication, the data is synchronously shifted between the 
+shift registers on the SCK clock edge in the transfer direction selected reciprecally by both master
+and slave.
+
+3. SIMPLEX COMMUNICATION
+Transmit-only. Receive Only mode:
+The configuration settings are the same as for full-duplex/ The application has to ignore the
+information captured on the unused input pin. This pin can be used as a standard GPIO.
+
+SLAVE SELECT (NSS) PIN MANAGEMENT
+When a device is slave mode:
+In slave mode, the NSS works as a standard "chip select" input and
+lets the slave communicate with the master.
+When a device is master:
+In master mode, NSS can be used either as output or input. 
+As an input it can prevent multi-master bus collision, and as an output
+it can drive a slave signal of a single slave.
+
+SLAVE SELECT (NSS) PIN MANAGEMENT
+When a device is slave mode:
+    In slave mode, the NSS works as a standard "chip select" input and lets the slave communicate
+    with the master.
+
+When a device is slave mode:
+    In master mode, NSS can be used either as output or input. As an input it can prevent multi-master
+    bus collision, and as an output it can drive a slace select signal of a single slave.
+
